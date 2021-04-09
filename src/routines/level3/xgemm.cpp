@@ -176,6 +176,9 @@ void Xgemm<T>::GemmIndirect(const size_t m, const size_t n, const size_t k,
                            ConstantOne<T>(), program_,
                            true, a_do_transpose, a_conjugate);
     eventWaitList.push_back(eventProcessA);
+// #ifdef VERBOSE
+//     std::cout << "a_temp: "; temp_buffer_all.print(queue_); std::cout << std::endl;
+// #endif
   }
 
   // As above, but now for matrix B
@@ -187,6 +190,9 @@ void Xgemm<T>::GemmIndirect(const size_t m, const size_t n, const size_t k,
                            ConstantOne<T>(), program_,
                            true, b_do_transpose, b_conjugate);
     eventWaitList.push_back(eventProcessB);
+// #ifdef VERBOSE
+//     std::cout << "b_temp: "; temp_buffer_all.print(queue_); std::cout << std::endl;
+// #endif
   }
 
   // As above, but now for matrix C. This is only necessary if C is used both as input and output.
@@ -198,6 +204,9 @@ void Xgemm<T>::GemmIndirect(const size_t m, const size_t n, const size_t k,
                            ConstantOne<T>(), program_,
                            true, c_do_transpose, false);
     eventWaitList.push_back(eventProcessC);
+// #ifdef VERBOSE
+//     std::cout << "c_temp: "; temp_buffer_all.print(queue_); std::cout << std::endl;
+// #endif
   }
 
   // Retrieves the Xgemm kernel from the compiled binary
@@ -238,6 +247,9 @@ void Xgemm<T>::GemmIndirect(const size_t m, const size_t n, const size_t k,
                            ConstantOne<T>(), program_,
                            false, c_do_transpose, false);
   }
+// #ifdef VERBOSE
+//     std::cout << "c_buffer: "; c_buffer.print(queue_); std::cout << std::endl;
+// #endif
 }
 
 

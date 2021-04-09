@@ -46,11 +46,16 @@
 #include <cstdio>    // fprintf, stderr
 #include <assert.h>
 
+#ifdef VERBOSE
+#include <iostream>
+#include <iomanip>
+#endif
+
 // OpenCL
-#define CL_TARGET_OPENCL_VERSION 110
-#define CL_USE_DEPRECATED_OPENCL_1_1_APIS // to disable deprecation warnings
-#define CL_USE_DEPRECATED_OPENCL_1_2_APIS // to disable deprecation warnings
-#define CL_USE_DEPRECATED_OPENCL_2_0_APIS // to disable deprecation warnings
+// #define CL_TARGET_OPENCL_VERSION 110
+// #define CL_USE_DEPRECATED_OPENCL_1_1_APIS // to disable deprecation warnings
+// #define CL_USE_DEPRECATED_OPENCL_1_2_APIS // to disable deprecation warnings
+// #define CL_USE_DEPRECATED_OPENCL_2_0_APIS // to disable deprecation warnings
 #if defined(__APPLE__) || defined(__MACOSX)
   #include <OpenCL/opencl.h>
 #else
@@ -774,6 +779,22 @@ class Buffer {
 
   // Accessor to the private data-member
   const cl_mem& operator()() const { return *buffer_; }
+
+#ifdef VERBOSE
+  void print(const Queue &queue, const size_t offset = 0) const
+  {
+    std::cout << std::defaultfloat << std::setprecision(6);
+    std::size_t size = GetSize()/sizeof(T);
+    std::vector<T> host(size);
+    Read(queue, size, host, offset);
+    for (std::size_t i = 0; i < size; ++i)
+    {
+      std::cout << host[i] << (i+1 < size ? ",":"\n"); 
+    }
+    std::cout << std::flush;
+  }
+#endif
+
  private:
   std::shared_ptr<cl_mem> buffer_;
   BufferAccess access_;
