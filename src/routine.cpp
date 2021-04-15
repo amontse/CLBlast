@@ -66,6 +66,26 @@ Routine::Routine(Queue &queue, EventPointer event, const std::string &name,
   InitProgram(source);
 }
 
+Routine::Routine(Queue &queue, EventPointer event, const std::string &name,
+                 const std::vector<std::string> &kernel_names, const Precision precision,
+                 const std::vector<database::DatabaseEntry> &userDatabase,
+                 std::initializer_list<const char *> source, bool no_init):
+    precision_(precision),
+    routine_name_(name),
+    kernel_names_(kernel_names),
+    queue_(queue),
+    event_(event),
+    context_(queue_.GetContext()),
+    device_(queue_.GetDevice()),
+    db_(kernel_names) {
+
+  InitDatabase(device_, kernel_names, precision, userDatabase, db_);
+  if (!no_init)
+  {
+    InitProgram(source);
+  }
+}
+
 void Routine::InitProgram(std::initializer_list<const char *> source) {
 
   // Determines the identifier for this particular routine call

@@ -490,8 +490,8 @@ class Program {
   }
 
   // Compiles the device program and checks whether or not there are any warnings/errors
-  void Build(const Device &device, std::vector<std::string> &options) {
-    auto options_string = std::accumulate(options.begin(), options.end(), std::string{" "});
+  void Build(const Device &device, const std::vector<std::string> &options) {
+    auto options_string = std::accumulate(options.cbegin(), options.cend(), std::string{" "});
     const cl_device_id dev = device();
     CheckError(clBuildProgram(program_, 1, &dev, options_string.c_str(), nullptr, nullptr));
   }

@@ -74,6 +74,13 @@ class Routine {
   static const std::vector<std::string> routines_trsm;
   static const std::unordered_map<std::string, const std::vector<std::string>> routines_by_kernel;
 
+ protected:
+
+  explicit Routine(Queue &queue, EventPointer event, const std::string &name,
+                   const std::vector<std::string> &routines, const Precision precision,
+                   const std::vector<database::DatabaseEntry> &userDatabase,
+                   std::initializer_list<const char *> source, bool no_init);
+
  private:
 
   // Initializes program_, fetching cached program or building one
