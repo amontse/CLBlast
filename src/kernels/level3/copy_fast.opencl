@@ -38,7 +38,7 @@ R"(
 __kernel __attribute__((reqd_work_group_size(COPY_DIMX, COPY_DIMY, 1)))
 void CopyMatrixFast(const int ld,
                     __global const realC* restrict src,
-                    __global realC* dest,
+                    __global realC* FPGA_RESTRICT dest,
                     const real_arg arg_alpha) {
   const real alpha = GetRealArg(arg_alpha);
   #pragma unroll

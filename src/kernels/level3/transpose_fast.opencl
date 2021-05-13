@@ -39,7 +39,7 @@ R"(
 __kernel __attribute__((reqd_work_group_size(TRA_DIM, TRA_DIM, 1)))
 void TransposeMatrixFast(const int ld,
                          __global const realT* restrict src,
-                         __global realT* dest,
+                         __global realT* FPGA_RESTRICT dest,
                          const real_arg arg_alpha) {
   const real alpha = GetRealArg(arg_alpha);
 

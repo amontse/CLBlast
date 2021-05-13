@@ -46,6 +46,13 @@ class Database {
   explicit Database(const Device &device, const std::string &kernel_name,
                     const Precision precision, const std::vector<database::DatabaseEntry> &overlay);
 
+  explicit Database(const std::string &kernel_name,
+                    const Precision precision, const std::vector<database::DatabaseEntry> &overlay,
+                    const std::string& device_type = ::clblast::database::kDeviceTypeAll,
+                    const std::string& device_vendor = kDeviceVendorAll,
+                    const std::string& device_architecture = "default",
+                    const std::string& device_name = "default" );
+
   // Accessor of values by key
   size_t operator[](const std::string &key) const { return parameters_->find(key)->second; }
   bool exists(const std::string &key) const { return (parameters_->count(key) == 1); }
@@ -57,6 +64,15 @@ class Database {
   std::string GetValuesString() const;
   std::vector<std::string> GetParameterNames() const;
   const database::Parameters& GetParameters() const { return *parameters_; }
+
+ protected:
+  // refactored constructor routine
+  void init(const std::string &kernel_name,
+            const Precision precision, const std::vector<database::DatabaseEntry> &overlay,
+            const std::string& device_type,
+            const std::string& device_vendor,
+            const std::string& device_architecture,
+            const std::string& device_name);
 
  private:
   // Search method functions, returning a set of parameters (possibly empty)

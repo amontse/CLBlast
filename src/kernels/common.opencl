@@ -275,6 +275,18 @@ R"(
   INLINE_FUNC int GetGroupID0() { return get_group_id(0); }
 #endif
 
+#ifdef USE_FPGA_RESTRICT
+  #define FPGA_RESTRICT restrict
+#else
+  #define FPGA_RESTRICT
+#endif
+
+#ifdef DISABLE_FPGA_CACHED_LSU
+  #define FPGA_VOLATILE volatile
+#else
+  #define FPGA_VOLATILE 
+#endif
+
 // =================================================================================================
 
 // End of the C++11 raw string literal

@@ -65,7 +65,7 @@ void CopyPadMatrix(const int src_one, const int src_two,
                    __global const real* restrict src,
                    const int dest_one, const int dest_two,
                    const int dest_ld, const int dest_offset,
-                   __global real* dest,
+                   __global real* FPGA_RESTRICT dest,
                    const real_arg arg_alpha,
                    const int do_conjugate) {
   const real alpha = GetRealArg(arg_alpha);
@@ -124,7 +124,7 @@ void CopyMatrix(const int src_one, const int src_two,
                 __global const real* restrict src,
                 const int dest_one, const int dest_two,
                 const int dest_ld, const int dest_offset,
-                __global real* dest,
+                __global real* FPGA_RESTRICT dest,
                 const real_arg arg_alpha,
                 const int upper, const int lower,
                 const int diagonal_imag_zero) {

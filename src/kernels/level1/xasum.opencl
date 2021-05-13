@@ -33,7 +33,7 @@ R"(
 __kernel __attribute__((reqd_work_group_size(WGS1, 1, 1)))
 void Xasum(const int n,
            const __global real* restrict xgm, const int x_offset, const int x_inc,
-           __global real* output) {
+           __global real* FPGA_RESTRICT output) {
   __local real lm[WGS1];
   const int lid = get_local_id(0);
   const int wgid = get_group_id(0);
@@ -75,7 +75,7 @@ void Xasum(const int n,
 // be launched with a single workgroup only.
 __kernel __attribute__((reqd_work_group_size(WGS2, 1, 1)))
 void XasumEpilogue(const __global real* restrict input,
-                   __global real* asum, const int asum_offset) {
+                   __global real* FPGA_RESTRICT asum, const int asum_offset) {
   __local real lm[WGS2];
   const int lid = get_local_id(0);
 

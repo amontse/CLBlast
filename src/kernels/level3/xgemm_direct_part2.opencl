@@ -19,7 +19,7 @@ R"(
 
 // Caches global off-chip memory into local (shared) memory on-chip. This function is specific for
 // caching the A input matrix.
-INLINE_FUNC void GlobalToLocalDirectA(const __global realMD* restrict agm, LOCAL_PTR real* alm,
+INLINE_FUNC void GlobalToLocalDirectA(const __global FPGA_VOLATILE realMD* restrict agm, LOCAL_PTR real* alm,
                                       const int a_ld, const int a_offset, const int kwg,
                                       const int a_transpose, const int a_conjugate) {
   #if MDIMCD == MDIMAD
@@ -90,7 +90,7 @@ INLINE_FUNC void GlobalToLocalDirectA(const __global realMD* restrict agm, LOCAL
 }
 
 // Same as above, but now for the B input matrix
-INLINE_FUNC void GlobalToLocalDirectB(const __global realND* restrict bgm, LOCAL_PTR real* blm,
+INLINE_FUNC void GlobalToLocalDirectB(const __global FPGA_VOLATILE realND* restrict bgm, LOCAL_PTR real* blm,
                                       const int b_ld, const int b_offset, const int kwg,
                                       const int b_transpose, const int b_conjugate) {
   #if MDIMCD == NDIMBD
@@ -166,7 +166,7 @@ INLINE_FUNC void GlobalToLocalDirectB(const __global realND* restrict bgm, LOCAL
 // Caches global off-chip memory into local (shared) memory on-chip. This function is specific for
 // caching the A input matrix. In contrast to the functions above, this function performs doesn't
 // use the vector data-types.
-INLINE_FUNC void GlobalToLocalScalarA(const __global real* restrict agms, LOCAL_PTR real* alm,
+INLINE_FUNC void GlobalToLocalScalarA(const __global FPGA_VOLATILE real* restrict agms, LOCAL_PTR real* alm,
                                       const int a_ld, const int a_offset, const int kwg,
                                       const int a_transpose, const int a_conjugate) {
   #if MDIMCD == MDIMAD
@@ -197,7 +197,7 @@ INLINE_FUNC void GlobalToLocalScalarA(const __global real* restrict agms, LOCAL_
 }
 
 // Same as above, but now for the B input matrix
-INLINE_FUNC void GlobalToLocalScalarB(const __global real* restrict bgms, LOCAL_PTR real* blm,
+INLINE_FUNC void GlobalToLocalScalarB(const __global FPGA_VOLATILE real* restrict bgms, LOCAL_PTR real* blm,
                                       const int b_ld, const int b_offset, const int kwg,
                                       const int b_transpose, const int b_conjugate) {
   #if MDIMCD == NDIMBD
@@ -232,7 +232,7 @@ INLINE_FUNC void GlobalToLocalScalarB(const __global real* restrict bgms, LOCAL_
 // Caches global off-chip memory into local (shared) memory on-chip. This function is specific for
 // caching the A input matrix. In contrast to the functions above, this function performs bounds
 // checks and doesn't use the vector data-types.
-INLINE_FUNC void GlobalToLocalCheckedA(const __global real* restrict agms, LOCAL_PTR real* alm,
+INLINE_FUNC void GlobalToLocalCheckedA(const __global FPGA_VOLATILE real* restrict agms, LOCAL_PTR real* alm,
                                        const int a_ld, const int a_offset, const int kwg,
                                        const int a_transpose, const int a_conjugate,
                                        const int kSizeM, const int kSizeK) {
@@ -271,7 +271,7 @@ INLINE_FUNC void GlobalToLocalCheckedA(const __global real* restrict agms, LOCAL
 }
 
 // Same as above, but now for the B input matrix
-INLINE_FUNC void GlobalToLocalCheckedB(const __global real* restrict bgms, LOCAL_PTR real* blm,
+INLINE_FUNC void GlobalToLocalCheckedB(const __global FPGA_VOLATILE real* restrict bgms, LOCAL_PTR real* blm,
                                        const int b_ld, const int b_offset, const int kwg,
                                        const int b_transpose, const int b_conjugate,
                                        const int kSizeN, const int kSizeK) {

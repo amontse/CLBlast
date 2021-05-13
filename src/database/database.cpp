@@ -61,6 +61,22 @@ Database::Database(const Device &device, const std::string &kernel_name,
                    const Precision precision, const std::vector<database::DatabaseEntry> &overlay):
   parameters_(std::make_shared<database::Parameters>()) {
 
+  // Finds device information
+  const auto device_type = GetDeviceType(device);
+  const auto device_vendor = GetDeviceVendor(device);
+  const auto device_architecture = GetDeviceArchitecture(device);
+  const auto device_name = GetDeviceName(device);
+
+  init(kernel_name, precision, overlay, device_type, device_vendor, device_architecture, device_name);
+}
+
+void Database::init(const std::string &kernel_name,
+            const Precision precision, const std::vector<database::DatabaseEntry> &overlay,
+            const std::string& device_type,
+            const std::string& device_vendor,
+            const std::string& device_architecture,
+            const std::string& device_name)
+{
   // Initializes the static variable on first use. At this point we are sure all global variables are initialized
   if (database.size() == 0) {
     database = std::vector<database::DatabaseEntry>{
@@ -82,12 +98,6 @@ Database::Database(const Device &device, const std::string &kernel_name,
         database::TrsvRoutineHalf, database::TrsvRoutineSingle, database::TrsvRoutineDouble, database::TrsvRoutineComplexSingle, database::TrsvRoutineComplexDouble
     };
   }
-
-  // Finds device information
-  const auto device_type = GetDeviceType(device);
-  const auto device_vendor = GetDeviceVendor(device);
-  const auto device_architecture = GetDeviceArchitecture(device);
-  const auto device_name = GetDeviceName(device);
 
   // Prints the obtained information in verbose mode
   log_debug("Device type '" + device_type + "'; vendor '" + device_vendor + "'");
@@ -120,6 +130,17 @@ Database::Database(const Device &device, const std::string &kernel_name,
   }
 
   if (search_result.size() == 0) { throw RuntimeErrorCode(StatusCode::kDatabaseError); }
+}
+
+Database::Database(const std::string &kernel_name,
+                    const Precision precision, const std::vector<database::DatabaseEntry> &overlay,
+                    const std::string& device_type,
+                    const std::string& device_vendor,
+                    const std::string& device_architecture,
+                    const std::string& device_name)
+: parameters_(std::make_shared<database::Parameters>())
+{
+    init(kernel_name, precision, overlay, device_type, device_vendor, device_architecture, device_name);
 }
 
 // =================================================================================================

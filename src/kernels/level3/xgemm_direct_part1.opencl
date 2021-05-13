@@ -94,7 +94,7 @@ R"(
 
 // Loads global off-chip memory into thread-private register files. This function is specific for
 // loading the A input matrix.
-INLINE_FUNC real GlobalToPrivateDirectA(const __global real* restrict agms, const int _mi,
+INLINE_FUNC real GlobalToPrivateDirectA(const __global FPGA_VOLATILE real* restrict agms, const int _mi,
                                         const int a_ld, const int a_offset, const int idm, const int idk,
                                         const int a_transpose, const int a_conjugate) {
   const int a_index = (a_transpose) ? (idm + _mi)*a_ld + idk : idk*a_ld + (idm + _mi);
@@ -104,7 +104,7 @@ INLINE_FUNC real GlobalToPrivateDirectA(const __global real* restrict agms, cons
 }
 
 // Same as above, but now for the B input matrix
-INLINE_FUNC real GlobalToPrivateDirectB(const __global real* restrict bgms, const int _ni,
+INLINE_FUNC real GlobalToPrivateDirectB(const __global FPGA_VOLATILE real* restrict bgms, const int _ni,
                                         const int b_ld, const int b_offset, const int idn, const int idk,
                                         const int b_transpose, const int b_conjugate) {
   const int b_index = (b_transpose) ? (idn + _ni)*b_ld + idk : idk*b_ld + (idn + _ni);
@@ -115,7 +115,7 @@ INLINE_FUNC real GlobalToPrivateDirectB(const __global real* restrict bgms, cons
 
 // Loads global off-chip memory into thread-private register files. This function is specific for
 // loading the A input matrix. This is the same as above but now includes a bounds check.
-INLINE_FUNC real GlobalToPrivateCheckedA(const __global real* restrict agms, const int _mi,
+INLINE_FUNC real GlobalToPrivateCheckedA(const __global FPGA_VOLATILE real* restrict agms, const int _mi,
                                          const int a_ld, const int a_offset, const int idm, const int idk,
                                          const int a_transpose, const int a_conjugate,
                                          const int kSizeM) {
@@ -132,7 +132,7 @@ INLINE_FUNC real GlobalToPrivateCheckedA(const __global real* restrict agms, con
 }
 
 // Same as above, but now for the B input matrix
-INLINE_FUNC real GlobalToPrivateCheckedB(const __global real* restrict bgms, const int _ni,
+INLINE_FUNC real GlobalToPrivateCheckedB(const __global FPGA_VOLATILE real* restrict bgms, const int _ni,
                                          const int b_ld, const int b_offset, const int idn, const int idk,
                                          const int b_transpose, const int b_conjugate,
                                          const int kSizeN) {

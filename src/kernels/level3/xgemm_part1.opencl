@@ -284,7 +284,7 @@ INLINE_FUNC void GlobalToLocalB(const __global realN* restrict bgm, LOCAL_PTR re
 // Caches global off-chip memory directly into per-thread private memory (registers). This function
 // is specific for caching the A input matrix.
 #if SA == 0 && GEMMK == 0
-INLINE_FUNC realM GlobalToPrivateA(const __global realM* restrict agm, const int _mi,
+INLINE_FUNC realM GlobalToPrivateA(const __global FPGA_VOLATILE realM* restrict agm, const int _mi,
                                    const int kSizeM, const int idk, const int kwg) {
   // Computes the indices based on strided/non-strided access
   #if STRM == 0
@@ -303,7 +303,7 @@ INLINE_FUNC realM GlobalToPrivateA(const __global realM* restrict agm, const int
 
 // Same as above, but now for the B input matrix
 #if SB == 0 && GEMMK == 0
-INLINE_FUNC realN GlobalToPrivateB(const __global realN* restrict bgm, const int _ni,
+INLINE_FUNC realN GlobalToPrivateB(const __global FPGA_VOLATILE realN* restrict bgm, const int _ni,
                                    const int kSizeN, const int idk) {
   // Computes the indices based on strided/non-strided access
   #if STRN == 0

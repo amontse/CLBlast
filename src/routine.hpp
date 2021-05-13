@@ -81,6 +81,38 @@ class Routine {
                    const std::vector<database::DatabaseEntry> &userDatabase,
                    std::initializer_list<const char *> source, bool no_init);
 
+  // Only for AOT OpenCL source code extraction
+  explicit Routine(Queue &queue, const std::string &name,
+                   const std::vector<std::string> &routines, const Precision precision,
+                   const std::vector<database::DatabaseEntry> &userDatabase,
+                   const std::string& device_type = ::clblast::database::kDeviceTypeAll,
+                   const std::string& device_vendor = ::clblast::Database::kDeviceVendorAll,
+                   const std::string& device_architecture = "default",
+                   const std::string& device_name = "default");
+
+  // Initializes db_, fetching cached database or building one, only for AOT usage
+  static void InitDatabase(const std::vector<std::string> &kernel_names,
+                           const Precision precision, const std::vector<database::DatabaseEntry> &userDatabase,
+                           Databases &db, const std::string& device_type, const std::string& device_vendor,
+                           const std::string& device_architecture, const std::string& device_name)
+  {
+    for (const auto &kernel_name : kernel_names) {
+
+      // Queries the cache to see whether or not the kernel parameter database is already there
+      bool has_db;
+      db(kernel_name) = DatabaseCache::Instance().Get(DatabaseKeyRef{0, 0, precision, kernel_name},
+                                                       &has_db);
+      if (has_db) { continue; }
+
+      // Builds the parameter database for this device and routine set and stores it in the cache
+      log_debug("Searching database for kernel '" + kernel_name + "'");
+      db(kernel_name) = Database(kernel_name, precision, userDatabase,
+                                device_type, device_vendor, device_architecture, device_name);
+      DatabaseCache::Instance().Store(DatabaseKey{0, 0, precision, kernel_name},
+                                      Database{db(kernel_name)});
+    }
+  }
+
  private:
 
   // Initializes program_, fetching cached program or building one

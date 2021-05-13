@@ -36,7 +36,7 @@ R"(
 // =================================================================================================
 
 // Defines how to load the input matrix in the non-vectorized case
-INLINE_FUNC real LoadMatrixA(const __global real* restrict agm, const int x, const int y,
+INLINE_FUNC real LoadMatrixA(const FPGA_VOLATILE __global real* restrict agm, const int x, const int y,
                              const int a_ld, const int a_offset, const int parameter,
                              const int kl, const int ku) {
   real result;
@@ -215,9 +215,9 @@ void Xgemv(const int m, const int n,
                     const real_arg arg_alpha,
                     const real_arg arg_beta,
                     const int a_rotated,
-                    const __global real* restrict agm, const int a_offset, const int a_ld,
-                    const __global real* restrict xgm, const int x_offset, const int x_inc,
-                    __global real* ygm, const int y_offset, const int y_inc,
+                    const __global FPGA_VOLATILE real* restrict agm, const int a_offset, const int a_ld,
+                    const __global FPGA_VOLATILE real* restrict xgm, const int x_offset, const int x_inc,
+                    __global FPGA_VOLATILE real* FPGA_RESTRICT ygm, const int y_offset, const int y_inc,
                     const int do_conjugate, const int parameter,
                     const int kl, const int ku) {
   const real alpha = GetRealArg(arg_alpha);

@@ -75,7 +75,7 @@ R"(
 // =================================================================================================
 
 // Loads a vector input value
-INLINE_FUNC realVF LoadMatrixAVF(const __global realVF* restrict agm, const int x, const int y,
+INLINE_FUNC realVF LoadMatrixAVF(const __global FPGA_VOLATILE realVF* restrict agm, const int x, const int y,
                                  const int a_ld) {
   return agm[a_ld*y + x];
 }
@@ -93,9 +93,9 @@ void XgemvFast(const int m, const int n,
                const real_arg arg_alpha,
                const real_arg arg_beta,
                const int a_rotated,
-               const __global realVF* restrict agm, const int a_offset, const int a_ld,
-               const __global real* restrict xgm, const int x_offset, const int x_inc,
-               __global real* ygm, const int y_offset, const int y_inc,
+               const __global FPGA_VOLATILE realVF* restrict agm, const int a_offset, const int a_ld,
+               const __global FPGA_VOLATILE real* restrict xgm, const int x_offset, const int x_inc,
+               __global real* FPGA_RESTRICT ygm, const int y_offset, const int y_inc,
                const int do_conjugate, const int parameter,
                const int kl_unused, const int ku_unused) {
   const real alpha = GetRealArg(arg_alpha);
@@ -196,9 +196,9 @@ void XgemvFastRot(const int m, const int n,
                   const real_arg arg_alpha,
                   const real_arg arg_beta,
                   const int a_rotated,
-                  const __global realVFR* restrict agm, const int a_offset, const int a_ld,
-                  const __global real* restrict xgm, const int x_offset, const int x_inc,
-                  __global real* ygm, const int y_offset, const int y_inc,
+                  const __global FPGA_VOLATILE realVFR* restrict agm, const int a_offset, const int a_ld,
+                  const __global FPGA_VOLATILE real* restrict xgm, const int x_offset, const int x_inc,
+                  __global real* FPGA_RESTRICT ygm, const int y_offset, const int y_inc,
                   const int do_conjugate, const int parameter,
                   const int kl_unused, const int ku_unused) {
   const real alpha = GetRealArg(arg_alpha);

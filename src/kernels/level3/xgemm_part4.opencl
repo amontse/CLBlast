@@ -101,7 +101,7 @@ void Xgemm(const int kSizeM, const int kSizeN, const int kSizeK,
            const real_arg arg_beta,
            const __global realM* restrict agm,
            const __global realN* restrict bgm,
-           __global realM* cgm,
+           __global realM* FPGA_RESTRICT cgm,
            const int b_offset, const int c_offset) {
   const real alpha = GetRealArg(arg_alpha);
   const real beta = GetRealArg(arg_beta);

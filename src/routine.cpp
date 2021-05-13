@@ -86,6 +86,25 @@ Routine::Routine(Queue &queue, EventPointer event, const std::string &name,
   }
 }
 
+Routine::Routine(Queue &queue, const std::string &name,
+                   const std::vector<std::string> &kernel_names, const Precision precision,
+                   const std::vector<database::DatabaseEntry> &userDatabase,
+                   const std::string& device_type,
+                   const std::string& device_vendor,
+                   const std::string& device_architecture,
+                   const std::string& device_name)
+: precision_(precision),
+routine_name_(name),
+kernel_names_(kernel_names),
+queue_(queue),
+context_(queue_.GetContext()),
+device_(queue_.GetDevice()),
+db_(kernel_names)
+{
+    InitDatabase(kernel_names, precision, userDatabase, db_,
+                    device_type, device_vendor, device_architecture, device_name);
+}
+
 void Routine::InitProgram(std::initializer_list<const char *> source) {
 
   // Determines the identifier for this particular routine call

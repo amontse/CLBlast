@@ -223,7 +223,7 @@ void XgemmDirectNN(const int kSizeM, const int kSizeN, const int kSizeK,
                             const real_arg arg_alpha, const real_arg arg_beta,
                             const __global realMD* restrict agm, const int a_offset, const int a_ld,
                             const __global realND* restrict bgm, const int b_offset, const int b_ld,
-                            __global real* cgm, const int c_offset, const int c_ld,
+                            __global real* FPGA_RESTRICT cgm, const int c_offset, const int c_ld,
                             const int c_transpose, const int a_conjugate, const int b_conjugate) {
   __local real alm[WGD * (WGD + PADA)];
   __local real blm[WGD * (WGD + PADB)];
@@ -238,7 +238,7 @@ void XgemmDirectNT(const int kSizeM, const int kSizeN, const int kSizeK,
                             const real_arg arg_alpha, const real_arg arg_beta,
                             const __global realMD* restrict agm, const int a_offset, const int a_ld,
                             const __global realND* restrict bgm, const int b_offset, const int b_ld,
-                            __global real* cgm, const int c_offset, const int c_ld,
+                            __global real* FPGA_RESTRICT cgm, const int c_offset, const int c_ld,
                             const int c_transpose, const int a_conjugate, const int b_conjugate) {
   __local real alm[WGD * (WGD + PADA)];
   __local real blm[WGD * (WGD + PADB)];
@@ -253,7 +253,7 @@ void XgemmDirectTN(const int kSizeM, const int kSizeN, const int kSizeK,
                             const real_arg arg_alpha, const real_arg arg_beta,
                             const __global realMD* restrict agm, const int a_offset, const int a_ld,
                             const __global realND* restrict bgm, const int b_offset, const int b_ld,
-                            __global real* cgm, const int c_offset, const int c_ld,
+                            __global real* FPGA_RESTRICT cgm, const int c_offset, const int c_ld,
                             const int c_transpose, const int a_conjugate, const int b_conjugate) {
   __local real alm[WGD * (WGD + PADA)];
   __local real blm[WGD * (WGD + PADB)];
@@ -268,7 +268,7 @@ void XgemmDirectTT(const int kSizeM, const int kSizeN, const int kSizeK,
                             const real_arg arg_alpha, const real_arg arg_beta,
                             const __global realMD* restrict agm, const int a_offset, const int a_ld,
                             const __global realND* restrict bgm, const int b_offset, const int b_ld,
-                            __global real* cgm, const int c_offset, const int c_ld,
+                            __global real* FPGA_RESTRICT cgm, const int c_offset, const int c_ld,
                             const int c_transpose, const int a_conjugate, const int b_conjugate) {
   __local real alm[WGD * (WGD + PADA)];
   __local real blm[WGD * (WGD + PADB)];
