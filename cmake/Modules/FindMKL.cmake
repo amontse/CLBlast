@@ -33,6 +33,8 @@ set(MKL_PATHS
   /usr/local/mkl
   /opt/intel
   /opt/intel/mkl
+  /opt/intel/oneapi/mkl/latest
+  /opt/intel/oneapi/compiler/latest
 )
 
 # Finds the include directories
@@ -47,7 +49,7 @@ find_path(MKL_INCLUDE_DIRS
 mark_as_advanced(MKL_INCLUDE_DIRS)
 
 # Finds the libraries
-set(MKL_LIB_SUFFIXES lib lib64 lib/x86_64 lib/x64 lib/x86 lib/Win32 lib/import lib64/import lib/intel64)
+set(MKL_LIB_SUFFIXES lib lib64 lib/x86_64 lib/x64 lib/x86 lib/Win32 lib/import lib64/import lib/intel64 linux/compiler/lib/intel64_lin)
 find_library(MKL_LIBRARIES_LP64 NAMES mkl_intel_lp64 HINTS ${MKL_HINTS} PATH_SUFFIXES ${MKL_LIB_SUFFIXES} PATHS ${MKL_PATHS} DOC "Intel MKL lp64 library")
 find_library(MKL_LIBRARIES_THREAD NAMES mkl_intel_thread HINTS ${MKL_HINTS} PATH_SUFFIXES ${MKL_LIB_SUFFIXES} PATHS ${MKL_PATHS} DOC "Intel MKL thread library")
 find_library(MKL_LIBRARIES_CORE NAMES mkl_core HINTS ${MKL_HINTS} PATH_SUFFIXES ${MKL_LIB_SUFFIXES} PATHS ${MKL_PATHS} DOC "Intel MKL core library")
